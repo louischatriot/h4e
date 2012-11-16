@@ -17,6 +17,9 @@
 , "repository": { "type": "git"
                 , "url": "git://github.com/tldrio/h4e"
                 }
+, "engines": {
+    "node": "*"
+  }
 , "main": "index"
 , "licence": "mit"
 }
