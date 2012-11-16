@@ -9,7 +9,7 @@ Hogan for Express, with support for partials
 
 (The MIT License)
 
-Copyright (c) 2009-2012 tldr.io &lt;meta@tldr.io&gt;
+Copyright (c) 2012 tldr.io &lt;meta@tldr.io&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
