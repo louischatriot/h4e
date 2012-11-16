@@ -8,9 +8,9 @@
 , "description": "Hogan wrapper for Express, with support for partials"
 , "keywords": ["hogan", "express", "partials"]
 , "homepage": "https://github.com/tldrio/h4e"
-, "dependencies": { "async": "0.1.x"
-                  , "hogan.js": "2.0.x"
-                  , "underscore": "1.4.x"
+, "dependencies": { "async": "0.1.22"
+                  , "hogan.js": "2.0.0"
+                  , "underscore": "1.4.2"
                   }
 , "main": "index"
 , "licence": "mit"
