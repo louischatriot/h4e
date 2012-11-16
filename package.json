@@ -1,0 +1,18 @@
+{ "name": "h4e"
+, "version": "0.1.0"
+, "author": "tldr.io"
+, "contributors": [ "Stanislas Marion"
+                  , "Charles Miglietti"
+                  , "Louis Chatriot"
+                  ]
+, "description": "Hogan wrapper for Express, with support for partials"
+, "keywords": ["hogan", "express", "partials"]
+, "homepage": "https://github.com/tldrio/h4e"
+, "dependencies": { "async": "0.1.x"
+                  , "hogan.js": "2.0.x"
+                  , "underscore": "1.4.x"
+                  }
+, "main": "index"
+, "licence": "mit"
+}
+
