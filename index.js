@@ -1,3 +1,10 @@
+/*
+ * Wrapper around Hogan to be used with Express and enjoying support for partials
+ * (c) 2012 tldrio <meta@tldr.io>, MIT Licence
+ * Project homepage: https://github.com/tldrio/h4e
+ */
+
+
 var hogan = require('hogan.js')
   , fs = require('fs')
   , path = require('path')
