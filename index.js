@@ -88,8 +88,11 @@ function render (template, options, fn) {
  *        {String} extension Only the templates with this extension will be compiled. Defaults to 'mustache'
  *        {String} baseDir The base directory where all templates are, not to be repeated in all partials names. Defaults to 'templates'
  *        {Array} toCompileDirs All subdirs containing the templates, part of the partials names
+ * @param {Object} cb Optional callback
  */
-module.exports = function (app, options) {
+module.exports = function (app, options, cb) {
+  var callback = cb || function () {};
+
   extension = options.extension || 'mustache';
   templatesDir = options.baseDir || 'templates';
   targets = options.toCompileDirs || [];
@@ -99,6 +102,8 @@ module.exports = function (app, options) {
     app.engine(extension, render);
     app.set('view engine', extension);
     app.set('views', templatesDir);
+
+    callback();
   });
 };
 
