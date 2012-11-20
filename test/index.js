@@ -1,6 +1,4 @@
-
-var cons = require('../../')
-    ;
+var h4e = require('../');
 
 describe("Test h4e", function() {
 
