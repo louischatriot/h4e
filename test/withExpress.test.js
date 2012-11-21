@@ -42,12 +42,23 @@ describe("Test h4e with Express", function() {
     });
 	});
 
-  //it('Should support partials', function(done){
+  it('Should support partials', function(done){
+    testHandler = function (req, res, next) {
+      var values = { user: { username: 'Grafitti', species: 'cat', gender: 'female' }
+                   };
+      res.render('withPartials', { values: values });
+    };
+
+    request.get({ headers: {"Accept": "application/json"}
+                , uri: 'http://localhost:8686/test' }, function (error, response, body) {
+      response.statusCode.should.equal(200);
+      body.should.equal('Hello Grafitti.\nYou are a female cat.\n');
+      done();
+    });
     //var t = h4e.render('withPartials', { values: { user: { username: 'Grafitti', species: 'cat', gender: 'female' }
                                                  //}
                                        //});
-    //t.should.equal('Hello Grafitti.\nYou are a female cat.\n');
 		//done();
-	//});
+  });
 
 });
