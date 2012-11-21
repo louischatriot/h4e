@@ -26,7 +26,7 @@ describe("Test h4e with Express", function() {
 	});
 
 
-	it('Should support locals', function(done){
+	it('Should support locals', function(done) {
     testHandler = function (req, res, next) {
       var values = { planet: "World"
                    , user: { username: 'Grafitti' }
@@ -42,7 +42,7 @@ describe("Test h4e with Express", function() {
     });
 	});
 
-  it('Should support partials', function(done){
+  it('Should support partials', function(done) {
     testHandler = function (req, res, next) {
       var values = { user: { username: 'Grafitti', species: 'cat', gender: 'female' }
                    };
@@ -55,10 +55,24 @@ describe("Test h4e with Express", function() {
       body.should.equal('Hello Grafitti.\nYou are a female cat.\n');
       done();
     });
-    //var t = h4e.render('withPartials', { values: { user: { username: 'Grafitti', species: 'cat', gender: 'female' }
-                                                 //}
-                                       //});
-		//done();
+  });
+
+  it('Should enable usage of layouts', function(done) {
+    // We will render layout.mustache with the partial partials/description as the content
+    testHandler = function (req, res, next) {
+      var values = { user: { username: 'Grafitti', species: 'cat', gender: 'female' }
+                   }
+        , partials = { content: '{{>partials/description}}' }
+        ;
+      res.render('layout', { values: values, partials: partials });
+    };
+
+    request.get({ headers: {"Accept": "application/json"}
+                , uri: 'http://localhost:8686/test' }, function (error, response, body) {
+      response.statusCode.should.equal(200);
+      body.should.equal('Header.\nYou are a female cat.\nFooter.\n');
+      done();
+    });
   });
 
 });
