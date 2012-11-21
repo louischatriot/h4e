@@ -1,6 +1,7 @@
 var h4e = require('../')
   , path = require('path')
   , app = require('express')()
+  , request = require('request')
   ;
 
 describe("Test h4e with Express", function() {

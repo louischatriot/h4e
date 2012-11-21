@@ -17,6 +17,7 @@
 , "devDependencies": { "mocha": "*"
                      , "should": "*"
                      , "express": "3.0.0"
+                     , "request": "2.9.x"
                      }
 , "repository": { "type": "git"
                 , "url": "git://github.com/tldrio/h4e"
