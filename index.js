@@ -58,14 +58,14 @@ function readAndCompileTemplates (root, callback) {
 /**
  * Actually render the template. The signature is imposed by Express
  * This can only be called once all necessary templates have been compiled, otherwise the usual error will be thrown by Express
- * @param {String} template Path to reach the template from the baseDir
+ * @param {String} template Path to reach the template from the baseDir, without the extension
  * @param {Object} options Hogan options. The two most important are options.values and options.partials (names are explicit)
- * @param {Function} fn Optional. Callback supplied by Express once rendering is done. If no callback is supplied, the result of the rendering is simply returned.
+ * @param {Function} fn Optional. Callback supplied by Express once rendering is done.
+ *                                No callback should be supplied if render is not called by Express. In that case, render simply returns the result of the rendering.
  */
 function render (template, options, fn) {
-  var extname = path.extname(template)
-    , basename = path.basename(template, extname)
-    , relative = path.relative(templatesDir, template)
+  var basename = path.basename(template)
+    , relative = fn ? path.relative(templatesDir, template) : template
     , dirname = path.dirname(relative)
     , keyname = path.join(dirname, basename)
     , templateToRender = compiledTemplates[keyname]
@@ -74,11 +74,6 @@ function render (template, options, fn) {
     // which is the intended behaviour because we can override it when we want
     , result = templateToRender.render(options.values, _.extend(_.clone(compiledTemplates), options.partials))
     ;
-
-    //console.log("========");
-    //console.log(_.keys(compiledTemplates));
-    //console.log(templatesDir);
-    //console.log(relative);
 
   if (fn) {   // render was called by Express
     try {
@@ -91,6 +86,7 @@ function render (template, options, fn) {
   // Render was called directly
   return result;
 }
+
 
 
 /**
