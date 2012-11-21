@@ -16,8 +16,11 @@ describe("Test h4e", function() {
 
 
 	it('should support locals', function(done){
-    var t = h4e.render('onlyLocals', { values: { planet: "World" } });
-    t.should.equal('Hello <b>World</b> !\n');
+    var t = h4e.render('onlyLocals', { values: { planet: "World"
+                                               , user: { username: 'Grafitti' }
+                                               }
+                                     });
+    t.should.equal('Hello <b>World</b> !\nYour username is Grafitti.\n');
 		done();
 	});
 
