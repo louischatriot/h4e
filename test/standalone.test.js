@@ -17,7 +17,6 @@ describe("Test h4e in standalone", function() {
                });
 	});
 
-
 	it('Should support locals', function(done){
     var values = { planet: 'World'
                  , user: { username: 'Grafitti' }
