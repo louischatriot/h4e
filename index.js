@@ -68,13 +68,9 @@ function render (template, options, fn) {
     , relative = fn ? path.relative(templatesDir, template) : template
     , dirname = path.dirname(relative)
     , keyname = path.join(dirname, basename)
-    , templateToRender = compiledTemplates[keyname]
-
-    // If compiledTemplates and options.partials have keys in common, compiledTemplates' will be rewritten
-    // which is the intended behaviour because we can override it when we want
+    , templateToRender = compiledTemplates[keyname] || hogan.compile(template)   // If template is not a precompiled template, it must be a string template
     , result = templateToRender.render(options.values, _.extend(_.clone(compiledTemplates), options.partials))
     ;
-
 
   if (fn) {   // render was called by Express
     try {
