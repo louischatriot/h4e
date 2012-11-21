@@ -60,7 +60,7 @@ function readAndCompileTemplates (root, callback) {
  * This can only be called once all necessary templates have been compiled, otherwise the usual error will be thrown by Express
  * @param {String} template Path to reach the template from the baseDir
  * @param {Object} options Hogan options. The two most important are options.values and options.partials (names are explicit)
- * @param {Function} fn Callback supplied by Express once rendering is done
+ * @param {Function} fn Optional. Callback supplied by Express once rendering is done. If no callback is supplied, the result of the rendering is simply returned.
  */
 function render (template, options, fn) {
   var extname = path.extname(template)
@@ -69,41 +69,60 @@ function render (template, options, fn) {
     , dirname = path.dirname(relative)
     , keyname = path.join(dirname, basename)
     , templateToRender = compiledTemplates[keyname]
-    ;
 
-  try {
     // If compiledTemplates and options.partials have keys in common, compiledTemplates' will be rewritten
     // which is the intended behaviour because we can override it when we want
-    fn(null, templateToRender.render(options.values, _.extend(_.clone(compiledTemplates), options.partials)));
-  } catch (err) {
-    fn(err);
+    , result = templateToRender.render(options.values, _.extend(_.clone(compiledTemplates), options.partials))
+    ;
+
+    //console.log("========");
+    //console.log(_.keys(compiledTemplates));
+    //console.log(templatesDir);
+    //console.log(relative);
+
+  if (fn) {   // render was called by Express
+    try {
+      fn(null, result);
+    } catch (err) {
+      fn(err);
+    }
   }
+
+  // Render was called directly
+  return result;
 }
 
 
 /**
  * Compile the templates and set up express to use this as its rendering engine
- * @param {Object} app The Express app for which we will set up the rendering engine
  * @param {Object} options Set up options, which are:
- *        {String} extension Only the templates with this extension will be compiled. Defaults to 'mustache'
- *        {String} baseDir The base directory where all templates are, not to be repeated in all partials names. Defaults to 'templates'
- *        {Array} toCompileDirs All subdirs containing the templates, part of the partials names
+ *        {Object} app            Optional. Express app for which we will set up the rendering engine.
+ *                                          If none provided we just compile all templates and the user can use the render function
+ *        {String} extension      Optional. Only the templates with this extension will be compiled. Defaults to 'mustache'
+ *        {String} baseDir        Optional. The base directory where all templates are, not to be repeated in all partials names. Defaults to 'templates'
+ *        {Array} toCompileDirs   Optional. All subdirs containing the templates, part of the partials names. Default to ['.']
  * @param {Object} cb Optional callback
  */
-module.exports = function (app, options, cb) {
+function setup (options, cb) {
   var callback = cb || function () {};
 
   extension = options.extension || 'mustache';
   templatesDir = options.baseDir || 'templates';
-  targets = options.toCompileDirs || [];
+  targets = options.toCompileDirs || ['.'];
 
-  // Compile the templates in all target directories and set up h4e as the rendering engine
+  // Compile the templates in all target directories
   async.forEach(targets, readAndCompileTemplates, function () {
-    app.engine(extension, render);
-    app.set('view engine', extension);
-    app.set('views', templatesDir);
+    // If an Express app was passed in the options, set up its rendering engine to be h4e
+    if (options.app) {
+      options.app.engine(extension, render);
+      options.app.set('view engine', extension);
+      options.app.set('views', templatesDir);
+    }
 
     callback();
   });
-};
+}
 
+
+// API
+module.exports = { setup: setup, render: render };
