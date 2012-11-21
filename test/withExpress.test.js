@@ -33,22 +33,14 @@ describe("Test h4e with Express", function() {
                    };
       res.render('onlyLocals', { values: values });
     };
+
     request.get({ headers: {"Accept": "application/json"}
                 , uri: 'http://localhost:8686/test' }, function (error, response, body) {
       response.statusCode.should.equal(200);
       body.should.equal('Hello <b>World</b> !\nYour username is Grafitti.\n');
       done();
     });
-
 	});
-
-	//it('should support rendering a string', function(done){
-    //var t = h4e.render('I like {{animal}}.', { values: { animal: "cats"
-                                            //}
-                                     //});
-    //t.should.equal('I like cats.');
-		//done();
-	//});
 
   //it('Should support partials', function(done){
     //var t = h4e.render('withPartials', { values: { user: { username: 'Grafitti', species: 'cat', gender: 'female' }
