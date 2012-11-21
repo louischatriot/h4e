@@ -2,6 +2,7 @@ var h4e = require('../')
   , path = require('path')
   , app = require('express')()
   , request = require('request')
+  , testHandler = function (req, res, next) {}   // stub
   ;
 
 describe("Test h4e with Express", function() {
@@ -11,9 +12,7 @@ describe("Test h4e with Express", function() {
     }
 
     app.use(app.router);
-    app.get('/onlyLocals', function (req, res, next) {
-      return res.json(409, {});
-    });
+    app.get('/test', function (req, res, next) { testHandler(req, res, next); });
 
     h4e.setup( { app: app
                , extension: 'mustache'
@@ -28,20 +27,19 @@ describe("Test h4e with Express", function() {
 
 
 	it('Should support locals', function(done){
-      
+    testHandler = function (req, res, next) {
+      var values = { planet: "World"
+                   , user: { username: 'Grafitti' }
+                   };
+      res.render('onlyLocals', { values: values });
+    };
     request.get({ headers: {"Accept": "application/json"}
-                , uri: 'http://localhost:8686/onlyLocals' }, function (error, response, body) {
-      console.log(response);
+                , uri: 'http://localhost:8686/test' }, function (error, response, body) {
+      response.statusCode.should.equal(200);
+      body.should.equal('Hello <b>World</b> !\nYour username is Grafitti.\n');
       done();
     });
 
-
-    //var t = h4e.render('onlyLocals', { values: { planet: "World"
-                                               //, user: { username: 'Grafitti' }
-                                               //}
-                                     //});
-    //t.should.equal('Hello <b>World</b> !\nYour username is Grafitti.\n');
-		//done();
 	});
 
 	//it('should support rendering a string', function(done){

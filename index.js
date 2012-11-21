@@ -64,7 +64,7 @@ function readAndCompileTemplates (root, callback) {
  *                                No callback should be supplied if render is not called by Express. In that case, render simply returns the result of the rendering.
  */
 function render (template, options, fn) {
-  var basename = path.basename(template)
+  var basename = path.basename(template, path.extname(template))
     , relative = fn ? path.relative(templatesDir, template) : template
     , dirname = path.dirname(relative)
     , keyname = path.join(dirname, basename)
