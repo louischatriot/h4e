@@ -47,7 +47,7 @@ describe("Test h4e in standalone", function() {
   it('Should support usage of layouts', function(done){
     var values = { user: { username: 'Grafitti', species: 'cat', gender: 'female' } }
       , partials = { content: '{{>partials/description}}' }
-      , t = h4e.render('layout', { values: values })
+      , t = h4e.render('layout', { values: values, partials: partials })
       ;
     t.should.equal('Header.\nYou are a female cat.\nFooter.\n');
 		done();
