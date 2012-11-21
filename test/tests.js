@@ -15,7 +15,7 @@ describe("Test h4e", function() {
 	});
 
 
-	it('should support locals', function(done){
+	it('Should support locals', function(done){
     var t = h4e.render('onlyLocals', { values: { planet: "World"
                                                , user: { username: 'Grafitti' }
                                                }
@@ -25,6 +25,10 @@ describe("Test h4e", function() {
 	});
 
 	it('should support rendering a string', function(done){
+    var t = h4e.render('I like {{animal}}.', { values: { animal: "cats"
+                                            }
+                                     });
+    t.should.equal('I like cats.');
 		done();
 	});
 });
