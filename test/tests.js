@@ -31,4 +31,13 @@ describe("Test h4e", function() {
     t.should.equal('I like cats.');
 		done();
 	});
+
+  it('Should support partials', function(done){
+    var t = h4e.render('withPartials', { values: { user: { username: 'Grafitti', species: 'cat', gender: 'female' }
+                                                 }
+                                       });
+    t.should.equal('Hello Grafitti.\nYou are a female cat.\n');
+		done();
+	});
+
 });
