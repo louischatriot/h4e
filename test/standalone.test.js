@@ -1,9 +1,12 @@
 var h4e = require('../')
-  , app = require('express')();
+  , path = require('path')
+  ;
 
-describe("Test h4e", function() {
+describe("Test h4e in standalone", function() {
 	before(function(done) {
-    process.chdir('test');
+    if (path.basename(process.cwd()) !== 'test') {   // chdir into test if we're not already in it
+      process.chdir('test');
+    }
 
     h4e.setup( { extension: 'mustache'
                , baseDir: 'templates'
