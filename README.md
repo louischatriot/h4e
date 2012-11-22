@@ -21,7 +21,7 @@ Install the dev dependencies, then `make test`. Uses <a target="_blank" href="ht
 ### Within Express
 
 If you have the typical setup with your main module in `.`, your Mustache templates for the website in `./templates/website` 
-and those for the forum in `./templates/forum`, Setting h4e is as simple as putting this in the module where you declare Express:
+and maybe those for a forum in `./templates/forum`, Setting h4e is as simple as putting this in the module where you declare Express:
 
 ```javascript
 var h4e = require('h4e')
