@@ -22,14 +22,20 @@ var h4e = require('h4e')
   , app = express();
 
 h4e.setup({ app: app
-          , extension: 'mustache'
-          , baseDir: 'templates' 
-          , toCompile: ['website', 'forum'] });
+          , extension: 'mustache'   // Tell h4e all your templates end in '.mustache'
+                                    // and you don't want to type it everytime
+
+          , baseDir: 'templates'    // All your templates are in this directory or its descendants
+                                    // Say it here and never type it again, h4e will know where to look
+
+          , toCompile: ['website', 'forum'] });   // The subdirectories of baseDir where your templates
+                                                  // really are. Tell h4e to compile them so you
+                                                  // can use them
 
 // Rest of Express code here
 ```
 
-Now you will never need to tell h4e that your templates have the 'mustache' extension and are in './templates'. If:
+Let's assume:
 
 * `./templates/website/hello.mustache` contains `Hello {{planet}} ! {{>website/description}}`
 * `./templates/website/description.mustache` contains `You are {{color}}`
@@ -38,7 +44,7 @@ Your request handler will be:
 
 ```javascript
 app.get('/test', function (req, res, next) {
-  values = { planet: 'World', color: 'blue' };
+  var values = { planet: 'World', color: 'blue' };
 
   // Renders 'Hello World ! You are blue'
   res.render( 'website/hello', { values: values } );
@@ -47,7 +53,33 @@ app.get('/test', function (req, res, next) {
 ```
 
 ### That's not enough, I want layouts!
+Of course, who doesn't? So let's assume:
 
+* `./templates/website/layout.mustache` contains `Header <b>{{>content}}</b> Footer`
+* `./templates/website/pages/index.mustache` contains `Yo {{animal}}, this is the homepage`
+* `./templates/website/pages/h4e.mustache` contains `This is {{adjective}} !`
+
+Then your request handlers need to be:
+
+```javascript
+app.get('/index', function (req, res, next) {
+  var values = { animal: 'dawg' }
+    , partials = { content: '{{>website/pages/index}}' }
+    ;
+
+  // Renders 'Header <b>Yo dawg, this is the homepage</b> Footer'
+  res.render( 'website/layout', { values: values, partials: partials } );
+});
+
+app.get('/whatish4e', function (req, res, next) {
+  var values = { adjective: 'awesome' }
+    , partials = { content: '{{>website/pages/h4e}}' }
+    ;
+
+  // Renders 'Header <b>This is awesome !</b> Footer'
+  res.render( 'website/layout', { values: values, partials: partials } );
+});
+```
 
 
 
