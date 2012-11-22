@@ -21,7 +21,8 @@ var h4e = require('h4e')
   , express = require('express')
   , app = express();
 
-h4e.setup({ app: app
+h4e.setup({ app: app   // Give it your Express app so that it handles all the configuration
+
           , extension: 'mustache'   // Tell h4e all your templates end in '.mustache'
                                     // and you don't want to type it everytime
 
