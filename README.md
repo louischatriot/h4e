@@ -82,6 +82,31 @@ app.get('/whatish4e', function (req, res, next) {
 });
 ```
 
+### I want to use it directly, without Express!
+You sure want lots of different things, but that's OK. Set it up without passing a reference to Express, like this:
+
+```javascript
+var h4e = require('h4e')
+  , express = require('express')
+  , app = express();
+
+h4e.setup({ extension: 'mustache'
+          , baseDir: 'templates'
+          , toCompile: ['emails', 'messages'] });
+// Rest of Express code here
+```
+
+So now you want to send a welcome email. Let's assume:
+* `./templates/emails/welcome.mustache` contains `Hello {{username}} ! Welcome to our service !`
+
+```javascript
+var values = { username: 'Grafitti' }
+  , emailBody = h4e.render('emails/welcome', { values: values });
+
+// Send an email with emailBody, which is 'Hello Grafitti ! Welcome to our service !'
+```
+
+As you can see, very similar to Express' `res.render`, you can use partials and layouts too.
 
 
 
