@@ -14,7 +14,7 @@ You can also add it to your `package.json`, here is the [npm page](https://npmjs
 
 ## Testing
 
-Install the dev dependencies, then `make test`. Uses [Mocha](http://visionmedia.github.com/mocha/).
+Install the dev dependencies, then `make test`. Uses <a target="_blank" href="http://visionmedia.github.com/mocha/">Mocha</a>.
 
 
 ## Usage
