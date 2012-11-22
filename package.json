@@ -7,8 +7,8 @@
                   , "Charles Miglietti"
                   , "Louis Chatriot"
                   ]
-, "description": "Hogan wrapper for Express, with support for partials"
-, "keywords": ["hogan", "express", "partials"]
+, "description": "Hogan wrapper for Express, with support for partials and layouts"
+, "keywords": ["hogan", "express", "partials", "layouts", "mustache"]
 , "homepage": "https://github.com/tldrio/h4e"
 , "dependencies": { "async": "0.1.22"
                   , "hogan.js": "2.0.0"
