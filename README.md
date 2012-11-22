@@ -1,7 +1,7 @@
 h4e
 ===
 
-Hogan for Express v3 (should work with the v2 too but I haven't tested it yet), with support for partials and layouts.
+Hogan for Express 3.x (should work with Express 2.x too but I haven't tested it yet), with support for partials and layouts.
 
 ## Installation
 
