@@ -43,10 +43,10 @@ h4e.setup({ app: app   // Give it your Express app so that it handles all the co
 // Rest of Express code here
 ```
 
-Let's assume:
+Partial support is a breeze, you can just reference the file holding the partial, like this:
 
 * `./templates/website/hello.mustache` contains `Hello {{planet}} ! {{>website/description}}`
-* `./templates/website/description.mustache` contains `You are {{color}}`
+* The partial `./templates/website/description.mustache` contains `You are {{color}}`
 
 Your request handler will be:
 
@@ -61,7 +61,7 @@ app.get('/test', function (req, res, next) {
 ```
 
 ### That's not enough, I want layouts!
-Of course, who doesn't? So let's assume:
+Of course, who doesn't? So now you cannot directly reference the partial filename, but you can do something like this:
 
 * `./templates/website/layout.mustache` contains `Header <b>{{>content}}</b> Footer`
 * `./templates/website/pages/index.mustache` contains `Yo {{animal}}, this is the homepage`
