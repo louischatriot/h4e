@@ -1,7 +1,22 @@
 h4e
 ===
 
-Hogan for Express, with support for partials
+Hogan for Express, with support for partials and layouts.
+
+## Installation
+
+```bash
+$ npm install h4e      # Install locally
+$ npm install -g h4e   # Install globally
+```
+
+## Usage
+### Within Express
+
+```javascript
+var h4e = require('h4e');
+```
+
 
 
 
