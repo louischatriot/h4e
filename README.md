@@ -72,7 +72,9 @@ Then your request handlers need to be:
 ```javascript
 app.get('/index', function (req, res, next) {
   var values = { animal: 'dawg' }
-    , partials = { content: '{{>website/pages/index}}' }
+    , partials = { content: '{{>website/pages/index}}' }   // Partial content is directly replaced
+                                                           // by a reference to the partial holding
+                                                          // the page contents: website/pages/index
     ;
 
   // Renders 'Header <b>Yo dawg, this is the homepage</b> Footer'
