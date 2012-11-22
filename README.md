@@ -1,7 +1,7 @@
 h4e
 ===
 
-Hogan for Express, with support for partials and layouts.
+Hogan for Express v3 (should work with the v2 too but I haven't tested it yet), with support for partials and layouts.
 
 ## Installation
 
@@ -9,6 +9,9 @@ Hogan for Express, with support for partials and layouts.
 $ npm install h4e      # Install locally
 $ npm install -g h4e   # Install globally
 ```
+
+You can also add it to your `package.json`, here is the [npm page](https://npmjs.org/package/h4e) where you can find what the latest version is.
+
 
 ## Usage
 ### Within Express
