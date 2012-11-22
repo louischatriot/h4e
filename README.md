@@ -13,10 +13,34 @@ $ npm install -g h4e   # Install globally
 ## Usage
 ### Within Express
 
+If you have the typical setup with your main module in `.`, your Mustache templates for the website in `./templates/website` 
+and those for the forum in `./templates/forum`, Setting h4e is as simple as:
+
 ```javascript
-var h4e = require('h4e');
+var h4e = require('h4e')
+  , express = require('express')
+  , app = express();
+
+h4e.setup({ app: app
+          , extension: 'mustache'
+          , baseDir: 'templates' 
+          , toCompile: ['website', 'forum'] });
+
+// Rest of Express code here
 ```
 
+Assuming `./templates/website/hello.mustache` contains `Hello {{planet}} ! {{>website/description}}`, and
+`./templates/website/description.mustache` contains `You are blue`, your request handlers will be:
+
+```javascript
+app.get('/test', function (req, res, next) {
+  values = { planet: 'World' };
+
+  // Renders 'Hello World ! You are blue'
+  res.render( 'website/', { values: values } );
+});
+
+```
 
 
 
