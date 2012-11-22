@@ -10,7 +10,7 @@ $ npm install h4e      # Install locally
 $ npm install -g h4e   # Install globally
 ```
 
-You can also add it to your `package.json`, here is the <a target="_blank" href="https://npmjs.org/package/h4e">npm page</a> where you can find what the latest version is.
+You can also add it to your `package.json`, the latest version is `0.2.0`. Here is the <a target="_blank" href="https://npmjs.org/package/h4e">npm page</a>.
 
 ## Testing
 
