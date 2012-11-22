@@ -29,18 +29,27 @@ h4e.setup({ app: app
 // Rest of Express code here
 ```
 
-Assuming `./templates/website/hello.mustache` contains `Hello {{planet}} ! {{>website/description}}`, and
-`./templates/website/description.mustache` contains `You are blue`, your request handlers will be:
+Now you will never need to tell h4e that your templates have the 'mustache' extension and are in './templates'. If:
+
+* `./templates/website/hello.mustache` contains `Hello {{planet}} ! {{>website/description}}`
+* `./templates/website/description.mustache` contains `You are {{color}}`
+
+Your request handler will be:
 
 ```javascript
 app.get('/test', function (req, res, next) {
-  values = { planet: 'World' };
+  values = { planet: 'World', color: 'blue' };
 
   // Renders 'Hello World ! You are blue'
-  res.render( 'website/', { values: values } );
+  res.render( 'website/hello', { values: values } );
 });
 
 ```
+
+### That's not enough, I want layouts!
+
+
+
 
 
 
