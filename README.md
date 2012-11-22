@@ -125,7 +125,7 @@ var values = { username: 'Grafitti', species: 'cat' }
 ```
 
 ### Anything else?
-I think that's pretty much everything you need. You can always talk to us through issues, pull requests or email at meta@tldr.io.
+I think that's pretty much everything you need. You can always talk to us through issues, pull requests or email at hello@tldr.io.
 Speaking of which, you should check our website, where we use h4e in production. It is [http://tldr.io](http://tldr.io)
 
 
