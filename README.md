@@ -86,9 +86,7 @@ app.get('/whatish4e', function (req, res, next) {
 You sure want lots of different things, but that's OK. Set it up without passing a reference to Express, like this:
 
 ```javascript
-var h4e = require('h4e')
-  , express = require('express')
-  , app = express();
+var h4e = require('h4e');
 
 h4e.setup({ extension: 'mustache'
           , baseDir: 'templates'
