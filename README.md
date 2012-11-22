@@ -103,11 +103,25 @@ So now you want to send a welcome email. Let's assume:
 var values = { username: 'Grafitti' }
   , emailBody = h4e.render('emails/welcome', { values: values });
 
-// Send an email with emailBody, which is 'Hello Grafitti ! Welcome to our service !'
+// emailBody is 'Hello Grafitti ! Welcome to our service !'
 ```
 
 As you can see, very similar to Express' `res.render`, you can use partials and layouts too.
 
+
+### I want to directly render strings!
+Allright allright, you can do that too.
+
+```javascript
+var values = { username: 'Grafitti', species: 'cat' }
+  , emailBody = h4e.render('Hello {{username}} ! You are a {{species}}', { values: values });
+
+// emailBody is 'Hello Grafitti ! You are a cat !'
+```
+
+### Anything else?
+I think that's pretty much everything you need. You can always talk to us through issues, pull requests or email at meta@tldr.io.
+Speaking of which, you should check our website, where we use h4e in production. It is [http://tldr.io](http://tldr.io)
 
 
 
