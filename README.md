@@ -12,6 +12,10 @@ $ npm install -g h4e   # Install globally
 
 You can also add it to your `package.json`, here is the [npm page](https://npmjs.org/package/h4e) where you can find what the latest version is.
 
+## Testing
+
+Install the dev dependencies, then `make test`. Uses [Mocha](http://visionmedia.github.com/mocha/).
+
 
 ## Usage
 ### Within Express
