@@ -1,6 +1,8 @@
 var h4e = require('../')
   , path = require('path')
-  , app = require('express')()
+  , express = require('express')
+  , http = require('http')
+  , app = require('express')
   , request = require('request')
   , testHandler = function (req, res, next) {}   // stub
   ;
@@ -56,13 +58,48 @@ function shouldEnableLayouts (done) {
 }
 
 
+// Needed to stop and start the server cleanly, because we want the Express app to be reinitialized
+// for each of two test suites, but we don't like EADDRINUSE errors
+function launchServer (expressApp, cb) {
+  var callback = cb ? cb : function () {}
+    , self = expressApp;
+
+  self.apiServer = http.createServer(self);
+
+  // Handle any connection error gracefully
+  self.apiServer.on('error', function () {
+    console.log("An error occured while launching the server, probably a server is already running on the same port!");
+    process.exit(1);
+  });
+
+  // Begin to listen. If the callback gets called, it means the server was successfully launched
+  self.apiServer.listen.apply(self.apiServer, [8686, function() {
+    console.log("Server launched, listening");
+    callback();
+  }]);
+};
+
+function stopServer (expressApp, cb) {
+  var callback = cb ? cb : function () {}
+    , self = expressApp;
+
+  self.apiServer.close(function () {
+    console.log("Server closed");
+    callback();
+  });
+};
+
+
+
+
 // Test suites
 describe("Test h4e with Express and the automatic setup", function() {
-	before(function(done) {
+  before(function(done) {
     if (path.basename(process.cwd()) !== 'test') {   // chdir into test if we're not already in it
       process.chdir('test');
     }
 
+    app = express();   // New app
     app.use(app.router);
     app.get('/test', function (req, res, next) { testHandler(req, res, next); });
 
@@ -72,13 +109,47 @@ describe("Test h4e with Express and the automatic setup", function() {
               , targets: ['.']
               });
 
-   app.listen(8686);
-   done();
+    launchServer(app, done);
+  });
+
+  after(function(done) {
+    stopServer(app, done);
+  });
+
+  it('Should support locals', shouldSupportLocals);
+  it('Should support partials', shouldSupportPartials);
+  it('Should enable usage of layouts', shouldEnableLayouts);
+});
+
+describe("Test h4e with standard Express setup", function() {
+	before(function(done) {
+    var render;
+
+    if (path.basename(process.cwd()) !== 'test') {   // chdir into test if we're not already in it
+      process.chdir('test');
+    }
+
+    app = express();   // New app
+    app.use(app.router);
+    app.get('/test', function (req, res, next) { testHandler(req, res, next); });
+
+    render = h4e.setup({ extension: 'mustache'
+                       , baseDir: 'templates'
+                       , targets: ['.']
+                       });
+    app.engine('mustache', render);
+    app.set('view engine', 'mustache');
+    app.set('views', 'templates');
+
+    launchServer(app, done);
 	});
 
+  after(function(done) {
+    stopServer(app, done);
+  });
 
 	it('Should support locals', shouldSupportLocals);
   it('Should support partials', shouldSupportPartials);
   it('Should enable usage of layouts', shouldEnableLayouts);
-
 });
+
