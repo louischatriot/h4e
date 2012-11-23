@@ -43,6 +43,7 @@ h4e.setup({ app: app   // Give it your Express app so that it handles all the co
           , toCompile: ['website', 'forum'] });   // The subdirectories of baseDir where your templates
                                                   // really are. Tell h4e to compile them so you
                                                   // can use them
+// Your're done!
 
 
 // #2 EASY INSTALL
@@ -61,8 +62,7 @@ app.engine('mustache', h4eRender);
 app.set('view engine', 'mustache');
 app.set('views', 'templates');
 
-
-
+// You're done
 ```
 
 Partial support is a breeze, you can just reference the file holding the partial, like this:
