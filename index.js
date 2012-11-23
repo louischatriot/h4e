@@ -16,7 +16,7 @@ var hogan = require('hogan.js')
 
 /**
  * Compile all templates in templatesDir/root and put the result in compiledTemplates
- * Used only once at the first rendering, then all compiled templates will be cached for more efficiency
+ * Only used at setup.
  * @param {String} root directory from which to recursively compile all templates
  * @param {Function} callback to be called after execution. Will be called even if there is an error, since that only means some files were not processed
  */
@@ -88,20 +88,23 @@ function render (template, options, fn) {
  *        {String} extension      Optional. Only the templates with this extension will be compiled. Defaults to 'mustache'
  *        {String} baseDir        Optional. The base directory where all templates are, not to be repeated in all partials names. Defaults to 'templates'
  *        {Array} toCompileDirs   Optional. All subdirs containing the templates, part of the partials names. Default to ['.']
+ * @return {Function} The rendering function that complies to Express' signature (can be given to the engine function or used directly)
  */
 function setup (options) {
   extension = options.extension || 'mustache';
   templatesDir = options.baseDir || 'templates';
   targets = options.toCompileDirs || ['.'];
 
-  // Compile the templates in all target directories
   _.each(targets, function (target) { readAndCompileTemplates(target); });
-    // If an Express app was passed in the options, set up its rendering engine to be h4e
-    if (options.app) {
-      options.app.engine(extension, render);
-      options.app.set('view engine', extension);
-      options.app.set('views', templatesDir);
-    }
+
+  // If an Express app was passed in the options, set up its rendering engine to be h4e
+  if (options.app) {
+    options.app.engine(extension, render);
+    options.app.set('view engine', extension);
+    options.app.set('views', templatesDir);
+  }
+
+  return render;
 }
 
 
