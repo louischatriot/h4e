@@ -21,9 +21,13 @@ Install the dev dependencies, then `make test`. Uses <a target="_blank" href="ht
 ### Within Express
 
 If you have the typical setup with your main module in `.`, your Mustache templates for the website in `./templates/website` 
-and maybe those for a forum in `./templates/forum`, setting h4e is as simple as putting this in the module where you declare Express:
+and maybe those for a forum in `./templates/forum`, you have a choice:  
+* **The super easy install** where h4e sets itself up to be Express' rendering engine (see first block in code below)
+* **The easy install** where h4e compiles the templates and lets you tie it to Express as you're used to
 
 ```javascript
+// #1: SUPER EASY INSTALL
+// h4e takes care of all the configuration
 var h4e = require('h4e')
   , express = require('express')
   , app = express();
@@ -40,7 +44,25 @@ h4e.setup({ app: app   // Give it your Express app so that it handles all the co
                                                   // really are. Tell h4e to compile them so you
                                                   // can use them
 
-// Rest of Express code here
+
+// #2 EASY INSTALL
+// Important, make sure that the extension and baseDir parameters
+// match, or Express will not find your templates
+var h4e = require('h4e')
+  , express = require('express')
+  , app = express()
+  , h4eRender;
+
+h4eRender = h4e.setup({ extension: 'mustache'
+                      , baseDir: 'templates'
+                      , toCompile: ['website', 'forum'] });
+
+app.engine('mustache', h4eRender);
+app.set('view engine', 'mustache');
+app.set('views', 'templates');
+
+
+
 ```
 
 Partial support is a breeze, you can just reference the file holding the partial, like this:
