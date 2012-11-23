@@ -14,15 +14,14 @@ describe("Test h4e with Express", function() {
     app.use(app.router);
     app.get('/test', function (req, res, next) { testHandler(req, res, next); });
 
-    h4e.setup( { app: app
-               , extension: 'mustache'
-               , baseDir: 'templates'
-               , targets: ['.']
-               }
-             , function () {
-                 app.listen(8686);
-                 done();
-               });
+    h4e.setup({ app: app
+              , extension: 'mustache'
+              , baseDir: 'templates'
+              , targets: ['.']
+              });
+
+   app.listen(8686);
+   done();
 	});
 
 

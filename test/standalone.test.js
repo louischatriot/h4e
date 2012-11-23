@@ -8,13 +8,12 @@ describe("Test h4e in standalone", function() {
       process.chdir('test');
     }
 
-    h4e.setup( { extension: 'mustache'
-               , baseDir: 'templates'
-               , targets: ['.']
-               }
-             , function () {
-                 done();
-               });
+    h4e.setup({ extension: 'mustache'
+              , baseDir: 'templates'
+              , targets: ['.']
+              });
+
+    done();
 	});
 
 	it('Should support locals', function(done){

@@ -9,7 +9,6 @@ var hogan = require('hogan.js')
   , fs = require('fs')
   , path = require('path')
   , _ = require('underscore')
-  , async = require('async')
   , compiledTemplates = {}
   , extension, templatesDir, targets
   ;
@@ -21,37 +20,32 @@ var hogan = require('hogan.js')
  * @param {String} root directory from which to recursively compile all templates
  * @param {Function} callback to be called after execution. Will be called even if there is an error, since that only means some files were not processed
  */
-function readAndCompileTemplates (root, callback) {
-  var dir = path.resolve(templatesDir, root);
+function readAndCompileTemplates (root) {
+  var dir = path.resolve(templatesDir, root)
+    , files;
 
-  fs.readdir(dir, function (err, files) {
-    if (err) { return callback(err); }
+  files = fs.readdirSync(dir);
 
-    async.forEach(
-        files
-      , function (file, callback) {
-          var extname = path.extname(file)
-            , basename = path.basename(file, extname)
-            , fullname = path.resolve(dir, file)
-            ;
+  _.each(files
+    , function (file) {
+        var extname = path.extname(file)
+          , basename = path.basename(file, extname)
+          , fullname = path.resolve(dir, file)
+          , stats, str
+          ;
 
-          fs.stat(fullname, function (err, stats) {
-            if (err) { return callback(err); }
-            if (stats.isDirectory()) {
-              readAndCompileTemplates(path.join(root, basename), callback);
-            }
-            if (stats.isFile() && extname === '.' + extension) {
-              fs.readFile(fullname, 'utf8', function (err, str) {
-                compiledTemplates[path.join(root, basename)] = hogan.compile(str);
-                callback();
-              });
-            }
-          });
-        }
-      , callback
-      );
+         stats = fs.statSync(fullname);
 
-  });
+
+          if (stats.isDirectory()) {
+            readAndCompileTemplates(path.join(root, basename));
+          }
+
+          if (stats.isFile() && extname === '.' + extension) {
+            str = fs.readFileSync(fullname, 'utf8');
+              compiledTemplates[path.join(root, basename)] = hogan.compile(str);
+          }
+      });
 }
 
 
@@ -94,26 +88,20 @@ function render (template, options, fn) {
  *        {String} extension      Optional. Only the templates with this extension will be compiled. Defaults to 'mustache'
  *        {String} baseDir        Optional. The base directory where all templates are, not to be repeated in all partials names. Defaults to 'templates'
  *        {Array} toCompileDirs   Optional. All subdirs containing the templates, part of the partials names. Default to ['.']
- * @param {Object} cb Optional callback
  */
-function setup (options, cb) {
-  var callback = cb || function () {};
-
+function setup (options) {
   extension = options.extension || 'mustache';
   templatesDir = options.baseDir || 'templates';
   targets = options.toCompileDirs || ['.'];
 
   // Compile the templates in all target directories
-  async.forEach(targets, readAndCompileTemplates, function () {
+  _.each(targets, function (target) { readAndCompileTemplates(target); });
     // If an Express app was passed in the options, set up its rendering engine to be h4e
     if (options.app) {
       options.app.engine(extension, render);
       options.app.set('view engine', extension);
       options.app.set('views', templatesDir);
     }
-
-    callback();
-  });
 }
 
 
