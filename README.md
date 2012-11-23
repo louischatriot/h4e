@@ -10,7 +10,7 @@ $ npm install h4e      # Install locally
 $ npm install -g h4e   # Install globally
 ```
 
-You can also add it to your `package.json`, the latest version is `0.2.0`. Here is the <a target="_blank" href="https://npmjs.org/package/h4e">npm page</a>.
+You can also add it to your `package.json`, the latest version is `0.3.0`. Here is the <a target="_blank" href="https://npmjs.org/package/h4e">npm page</a>.
 
 ## Testing
 
@@ -23,7 +23,7 @@ Install the dev dependencies, then `make test`. Uses <a target="_blank" href="ht
 If you have the typical setup with your main module in `.`, your Mustache templates for the website in `./templates/website` 
 and maybe those for a forum in `./templates/forum`, you have a choice:  
 * **The super easy install** where h4e sets itself up to be Express' rendering engine (see first block in code below)
-* **The easy install** where h4e compiles the templates and lets you tie it to Express as you're used to
+* **The easy install** where h4e compiles the templates and lets you tie it to Express as you're used to (second block)
 
 ```javascript
 // #1: SUPER EASY INSTALL
