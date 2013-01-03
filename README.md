@@ -152,6 +152,15 @@ var values = { username: 'Grafitti', species: 'cat' }
 I think that's pretty much everything you need. You can always talk to us through issues, pull requests or email at hello@tldr.io.
 Speaking of which, you should check our website, where we use h4e in production. It is [http://tldr.io](http://tldr.io)
 
+## Contributors
+    project: h4e
+    commits: 66
+    active : 5 days
+    files  : 12
+    authors: 
+    64  Louis Chatriot          97.0%
+     2	Stanislas Marion        3.0%
+
 
 
 ## License 
