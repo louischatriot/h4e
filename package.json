@@ -1,5 +1,5 @@
 { "name": "h4e"
-, "version": "0.3.0"
+, "version": "0.3.1"
 , "author": { "name": "tldr.io"
             , "email": "meta@tldr.io"
             }
@@ -11,7 +11,7 @@
 , "keywords": ["hogan", "express", "partials", "layouts", "mustache"]
 , "homepage": "https://github.com/tldrio/h4e"
 , "dependencies": { "hogan.js": "2.0.0"
-                  , "underscore": "1.4.2"
+                  , "underscore": "~1.4.2"
                   }
 , "devDependencies": { "mocha": "*"
                      , "should": "*"
