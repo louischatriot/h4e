@@ -62,7 +62,7 @@ function render (template, options, fn) {
     , relative = fn ? path.relative(templatesDir, template) : template
     , dirname = path.dirname(relative)
     , keyname = path.join(dirname, basename)
-    , values, parties
+    , values, partials
     , templateToRender = compiledTemplates[keyname] || hogan.compile(template)   // If template is not a precompiled template, it must be a string template
     , result
     ;
@@ -70,7 +70,7 @@ function render (template, options, fn) {
   options = options || {};
   values = options.values || {};
   partials = options.partials || {};
-  result = templateToRender.render(values, _.extend(_.clone(compiledTemplates), partials))
+  result = templateToRender.render(values, _.extend(_.clone(compiledTemplates), values, partials))
 
   if (fn) {   // render was called by Express
     try {
