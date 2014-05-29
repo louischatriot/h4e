@@ -38,12 +38,12 @@ function readAndCompileTemplates (root) {
 
 
           if (stats.isDirectory()) {
-            readAndCompileTemplates(path.join(root, basename));
+            readAndCompileTemplates(path.join(root, basename).replace(/[\\]/g, '/'));
           }
 
           if (stats.isFile() && extname === '.' + extension) {
             str = fs.readFileSync(fullname, 'utf8');
-              compiledTemplates[path.join(root, basename)] = hogan.compile(str);
+              compiledTemplates[path.join(root, basename).replace(/[\\]/g, '/')] = hogan.compile(str);
           }
       });
 }
