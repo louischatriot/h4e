@@ -1,6 +1,8 @@
 h4e
 ===
 
+**IMPORTANT: this library is not maintained anymore, please don't submit anymore pull requests except for bugfixes**
+
 Hogan for Express 3.x (should work with Express 2.x too but I haven't tested it yet), with intelligent support for partials and layouts.
 
 ## Installation
